@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 
 // frontend home
 Route::get('/', function () {
-    return view('front.home', ['title' => 'Home']);
+    return view('front.index', ['title' => 'Home']);
 })->name('home');
 
 // admin auth

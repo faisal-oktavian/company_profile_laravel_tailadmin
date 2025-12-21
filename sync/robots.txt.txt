@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Block folder yang tidak perlu diindeks
+Disallow: /admin/
+Disallow: /login/
+Disallow: /config/
+Disallow: /system/
+Disallow: /vendor/
+Disallow: /temp/
+Disallow: /cache/
+
+# Izinkan asset supaya Google bisa render halaman
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Sitemap lokasi
+Sitemap: https://faio.my.id/sitemap.xml
