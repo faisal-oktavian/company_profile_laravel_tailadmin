@@ -9,6 +9,23 @@ Route::get('/', function () {
     return view('front.index', ['title' => 'Home']);
 })->name('home');
 
+// frontend pages migrated from sync/
+Route::get('/about', function () {
+    return view('front.about', ['title' => 'About']);
+})->name('about');
+
+Route::get('/service', function () {
+    return view('front.service', ['title' => 'Service']);
+})->name('service');
+
+Route::get('/portfolio', function () {
+    return view('front.portfolio', ['title' => 'Portfolio']);
+})->name('portfolio');
+
+Route::get('/contact', function () {
+    return view('front.contact', ['title' => 'Contact']);
+})->name('contact');
+
 // admin auth
 Route::get('/admin', [AuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');

@@ -1,4 +1,5 @@
 @include('front.themes.header', ['title' => 'Faisal Arvia Oktavian – Web Developer & IT Specialist'])
+@include('front.themes.menu')
 
 <!-- slider / hero -->
 <section class="slider_section">

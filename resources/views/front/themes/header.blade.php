@@ -118,4 +118,3 @@
     </style>
 </head>
 <body>
-@include('front.themes.menu')
