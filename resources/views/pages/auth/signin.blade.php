@@ -1,187 +1,865 @@
 @extends('layouts.fullscreen-layout')
 
 @section('content')
-    <div class="relative z-1 bg-white p-6 sm:p-0 dark:bg-gray-900">
-        <div class="relative flex h-screen w-full flex-col justify-center sm:p-0 lg:flex-row dark:bg-gray-900">
-            <!-- Form -->
-            <div class="flex w-full flex-1 flex-col lg:w-1/2">
-                <div class="mx-auto w-full max-w-md pt-10">
-                    <a href="/"
-                        class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-                        <svg class="stroke-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M12.7083 5L7.5 10.2083L12.7083 15.4167" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <style>
+            /* Clean Banking Login Form - Complete & Self-Contained */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                /* background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); */
+                background: linear-gradient(135deg, #191a4f 0%, #696995 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                line-height: 1.6;
+            }
+
+            .login-container {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .login-card {
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 40px 32px 32px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                border: 1px solid #f1f5f9;
+                position: relative;
+            }
+
+            .login-header {
+                text-align: center;
+                margin-bottom: 32px;
+            }
+
+            .logo {
+                margin-bottom: 16px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .login-header h1 {
+                color: #1e293b;
+                font-size: 1.75rem;
+                font-weight: 700;
+                margin-bottom: 6px;
+                letter-spacing: -0.025em;
+            }
+
+            .login-header p {
+                color: #64748b;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            /* Form Styles */
+            .form-group {
+                margin-bottom: 20px;
+                position: relative;
+            }
+
+            .form-group label {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 6px;
+            }
+
+            .form-group input {
+                width: 100%;
+                background: #ffffff;
+                border: 1.5px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 12px 14px;
+                color: #1e293b;
+                font-size: 15px;
+                font-weight: 400;
+                outline: none;
+                transition: all 0.2s ease;
+                font-family: inherit;
+            }
+
+            .form-group input:focus {
+                border-color: #6366F1;
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            }
+
+            .form-group input::placeholder {
+                color: #94a3b8;
+            }
+
+            /* Password Field */
+            .password-wrapper {
+                position: relative;
+            }
+
+            .password-wrapper input {
+                padding-right: 44px;
+            }
+
+            .password-toggle {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #64748b;
+                padding: 6px;
+                border-radius: 4px;
+                transition: color 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .password-toggle:hover {
+                color: #6366F1;
+            }
+
+            .eye-closed {
+                display: none;
+            }
+
+            .password-toggle.show-password .eye-open {
+                display: none;
+            }
+
+            .password-toggle.show-password .eye-closed {
+                display: block;
+            }
+
+            /* Form Options */
+            .form-options {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .checkbox-wrapper {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                font-size: 13px;
+                color: #374151;
+                font-weight: 500;
+            }
+
+            .checkbox-wrapper input[type="checkbox"] {
+                display: none;
+            }
+
+            .checkmark {
+                width: 16px;
+                height: 16px;
+                border: 1.5px solid #d1d5db;
+                border-radius: 3px;
+                margin-right: 8px;
+                position: relative;
+                transition: all 0.2s ease;
+                background: #ffffff;
+            }
+
+            .checkbox-wrapper input[type="checkbox"]:checked + .checkmark {
+                background: #6366F1;
+                border-color: #6366F1;
+            }
+
+            .checkmark::after {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 1px;
+                width: 3px;
+                height: 7px;
+                border: solid white;
+                border-width: 0 1.5px 1.5px 0;
+                transform: rotate(45deg);
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            .checkbox-wrapper input[type="checkbox"]:checked + .checkmark::after {
+                opacity: 1;
+            }
+
+            .forgot-link {
+                color: #6366F1;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 600;
+                transition: color 0.2s ease;
+            }
+
+            .forgot-link:hover {
+                color: #4f46e5;
+            }
+
+            /* Login Button */
+            .login-btn {
+                width: 100%;
+                background: #6366F1;
+                color: #ffffff;
+                border: none;
+                border-radius: 8px;
+                padding: 12px 20px;
+                cursor: pointer;
+                font-family: inherit;
+                font-size: 15px;
+                font-weight: 600;
+                position: relative;
+                margin-bottom: 20px;
+                transition: all 0.2s ease;
+                overflow: hidden;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-btn:hover {
+                background: #4f46e5;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            }
+
+            .login-btn:active {
+                transform: translateY(0);
+            }
+
+            .login-btn:disabled {
+                background: #9ca3af;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .btn-text {
+                transition: opacity 0.2s ease;
+            }
+
+            .btn-loader {
+                position: absolute;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            .spinner {
+                width: 16px;
+                height: 16px;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-top: 2px solid #ffffff;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+
+            .login-btn.loading .btn-text {
+                opacity: 0;
+            }
+
+            .login-btn.loading .btn-loader {
+                opacity: 1;
+            }
+
+            /* Security Notice */
+            .security-notice {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 16px;
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-radius: 8px;
+                margin-bottom: 16px;
+            }
+
+            .security-notice span {
+                color: #166534;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            /* Error States */
+            .error-message {
+                color: #dc2626;
+                font-size: 12px;
+                font-weight: 500;
+                margin-top: 4px;
+                opacity: 0;
+                transform: translateY(-2px);
+                transition: all 0.2s ease;
+            }
+
+            .error-message.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .form-group.error input {
+                border-color: #dc2626;
+                background: #fef2f2;
+            }
+
+            .form-group.error input:focus {
+                box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            }
+
+            /* Success Message */
+            .success-message {
+                display: none;
+                text-align: center;
+                padding: 32px 20px;
+                opacity: 0;
+                transform: translateY(16px);
+                transition: all 0.3s ease;
+            }
+
+            .success-message.show {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .success-icon {
+                margin: 0 auto 16px;
+                animation: successScale 0.5s ease-out;
+            }
+
+            @keyframes successScale {
+                0% { transform: scale(0); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+
+            .success-message h3 {
+                color: #1e293b;
+                font-size: 1.25rem;
+                font-weight: 700;
+                margin-bottom: 4px;
+            }
+
+            .success-message p {
+                color: #64748b;
+                font-size: 14px;
+                font-weight: 500;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 480px) {
+                body {
+                    padding: 16px;
+                }
+                
+                .login-card {
+                    padding: 32px 24px 24px;
+                    border-radius: 12px;
+                }
+                
+                .login-header h1 {
+                    font-size: 1.5rem;
+                }
+                
+                .form-options {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                }
+                
+                .security-notice {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 6px;
+                }
+            }
+        </style>
+        
+
+
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                            <rect width="36" height="36" rx="8" fill="#6366F1"/>
+                            <path d="M12 14h12v8H12v-8zm2 2v4h8v-4h-8zm-2-4h12v2H12v-2zm0 12h12v2H12v-2z" fill="white"/>
                         </svg>
-                        Back to dashboard
-                    </a>
-                </div>
-                <div class="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
-                    <div>
-                        <div class="mb-5 sm:mb-8">
-                            <h1 class="text-title-sm sm:text-title-md mb-2 font-semibold text-gray-800 dark:text-white/90">
-                                Sign In
-                            </h1>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                Enter your email and password to sign in!
-                            </p>
-                        </div>
-                        <div>
-                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
-                                <button
-                                    class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M18.7511 10.1944C18.7511 9.47495 18.6915 8.94995 18.5626 8.40552H10.1797V11.6527H15.1003C15.0011 12.4597 14.4654 13.675 13.2749 14.4916L13.2582 14.6003L15.9087 16.6126L16.0924 16.6305C17.7788 15.1041 18.7511 12.8583 18.7511 10.1944Z"
-                                            fill="#4285F4" />
-                                        <path
-                                            d="M10.1788 18.75C12.5895 18.75 14.6133 17.9722 16.0915 16.6305L13.274 14.4916C12.5201 15.0068 11.5081 15.3666 10.1788 15.3666C7.81773 15.3666 5.81379 13.8402 5.09944 11.7305L4.99473 11.7392L2.23868 13.8295L2.20264 13.9277C3.67087 16.786 6.68674 18.75 10.1788 18.75Z"
-                                            fill="#34A853" />
-                                        <path
-                                            d="M5.10014 11.7305C4.91165 11.186 4.80257 10.6027 4.80257 9.99992C4.80257 9.3971 4.91165 8.81379 5.09022 8.26935L5.08523 8.1534L2.29464 6.02954L2.20333 6.0721C1.5982 7.25823 1.25098 8.5902 1.25098 9.99992C1.25098 11.4096 1.5982 12.7415 2.20333 13.9277L5.10014 11.7305Z"
-                                            fill="#FBBC05" />
-                                        <path
-                                            d="M10.1789 4.63331C11.8554 4.63331 12.9864 5.34303 13.6312 5.93612L16.1511 3.525C14.6035 2.11528 12.5895 1.25 10.1789 1.25C6.68676 1.25 3.67088 3.21387 2.20264 6.07218L5.08953 8.26943C5.81381 6.15972 7.81776 4.63331 10.1789 4.63331Z"
-                                            fill="#EB4335" />
-                                    </svg>
-                                    Sign in with Google
-                                </button>
-                                <button
-                                    class="inline-flex items-center justify-center gap-3 rounded-lg bg-gray-100 px-7 py-3 text-sm font-normal text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-800 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10">
-                                    <svg width="21" class="fill-current" height="20" viewBox="0 0 21 20"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M15.6705 1.875H18.4272L12.4047 8.75833L19.4897 18.125H13.9422L9.59717 12.4442L4.62554 18.125H1.86721L8.30887 10.7625L1.51221 1.875H7.20054L11.128 7.0675L15.6705 1.875ZM14.703 16.475H16.2305L6.37054 3.43833H4.73137L14.703 16.475Z" />
-                                    </svg>
-
-                                    Sign in with X
-                                </button>
-                            </div>
-                            <div class="relative py-3 sm:py-5">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-200 dark:border-gray-800"></div>
-                                </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="bg-white p-2 text-gray-400 sm:px-5 sm:py-2 dark:bg-gray-900">Or</span>
-                                </div>
-                            </div>
-                            <form action="{{ route('admin.login.post') }}" method="POST">
-                                @csrf
-
-                                @if($errors->any())
-                                    <div class="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-                                        <ul class="list-disc pl-5">
-                                            @foreach($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                                @if(session('status'))
-                                    <div class="mb-4 rounded border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif
-                                <div class="space-y-5">
-                                    <!-- Email -->
-                                    <div>
-                                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                            Email<span class="text-error-500">*</span>
-                                        </label>
-                                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="info@gmail.com"
-                                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
-                                    </div>
-                                    <!-- Password -->
-                                    <div>
-                                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                            Password<span class="text-error-500">*</span>
-                                        </label>
-                                        <div x-data="{ showPassword: false }" class="relative">
-                                            <input name="password" :type="showPassword ? 'text' : 'password'"
-                                                placeholder="Enter your password"
-                                                class="dark:bg-dark-900 shock-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
-                                            <span @click="showPassword = !showPassword"
-                                                class="absolute top-1/2 right-4 z-30 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-400">
-                                                <svg x-show="!showPassword" class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0002 13.8619C7.23361 13.8619 4.86803 12.1372 3.92328 9.70241C4.86804 7.26761 7.23361 5.54297 10.0002 5.54297C12.7667 5.54297 15.1323 7.26762 16.0771 9.70243C15.1323 12.1372 12.7667 13.8619 10.0002 13.8619ZM10.0002 4.04297C6.48191 4.04297 3.49489 6.30917 2.4155 9.4593C2.3615 9.61687 2.3615 9.78794 2.41549 9.94552C3.49488 13.0957 6.48191 15.3619 10.0002 15.3619C13.5184 15.3619 16.5055 13.0957 17.5849 9.94555C17.6389 9.78797 17.6389 9.6169 17.5849 9.45932C16.5055 6.30919 13.5184 4.04297 10.0002 4.04297ZM9.99151 7.84413C8.96527 7.84413 8.13333 8.67606 8.13333 9.70231C8.13333 10.7286 8.96527 11.5605 9.99151 11.5605H10.0064C11.0326 11.5605 11.8646 10.7286 11.8646 9.70231C11.8646 8.67606 11.0326 7.84413 10.0064 7.84413H9.99151Z" fill="#98A2B3" />
-                                                </svg>
-                                                <svg x-show="showPassword" class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M4.63803 3.57709C4.34513 3.2842 3.87026 3.2842 3.57737 3.57709C3.28447 3.86999 3.28447 4.34486 3.57737 4.63775L4.85323 5.91362C3.74609 6.84199 2.89363 8.06395 2.4155 9.45936C2.3615 9.61694 2.3615 9.78801 2.41549 9.94558C3.49488 13.0957 6.48191 15.3619 10.0002 15.3619C11.255 15.3619 12.4422 15.0737 13.4994 14.5598L15.3625 16.4229C15.6554 16.7158 16.1302 16.7158 16.4231 16.4229C16.716 16.13 16.716 15.6551 16.4231 15.3622L4.63803 3.57709ZM12.3608 13.4212L10.4475 11.5079C10.3061 11.5423 10.1584 11.5606 10.0064 11.5606H9.99151C8.96527 11.5606 8.13333 10.7286 8.13333 9.70237C8.13333 9.5461 8.15262 9.39434 8.18895 9.24933L5.91885 6.97923C5.03505 7.69015 4.34057 8.62704 3.92328 9.70247C4.86803 12.1373 7.23361 13.8619 10.0002 13.8619C10.8326 13.8619 11.6287 13.7058 12.3608 13.4212ZM16.0771 9.70249C15.7843 10.4569 15.3552 11.1432 14.8199 11.7311L15.8813 12.7925C16.6329 11.9813 17.2187 11.0143 17.5849 9.94561C17.6389 9.78803 17.6389 9.61696 17.5849 9.45938C16.5055 6.30925 13.5184 4.04303 10.0002 4.04303C9.13525 4.04303 8.30244 4.17999 7.52218 4.43338L8.75139 5.66259C9.1556 5.58413 9.57311 5.54303 10.0002 5.54303C12.7667 5.54303 15.1323 7.26768 16.0771 9.70249Z"
-                                                        fill="#98A2B3" />
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- Checkbox -->
-                                    <div class="flex items-center justify-between">
-                                        <div x-data="{ checkboxToggle: false }">
-                                            <label for="checkboxLabelOne"
-                                                class="flex cursor-pointer items-center text-sm font-normal text-gray-700 select-none dark:text-gray-400">
-                                                <div class="relative">
-                                                    <input type="checkbox" id="checkboxLabelOne" class="sr-only" @change="checkboxToggle = !checkboxToggle" />
-                                                    <div :class="checkboxToggle ? 'border-brand-500 bg-brand-500' :
-                                                        'bg-transparent border-gray-300 dark:border-gray-700'"
-                                                        class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
-                                                        <span :class="checkboxToggle ? '' : 'opacity-0'">
-                                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="white" stroke-width="1.94437" stroke-linecap="round" stroke-linejoin="round" />
-                                                            </svg>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                Keep me logged in
-                                            </label>
-                                        </div>
-                                        <a href="/reset-password" class="text-brand-500 hover:text-brand-600 dark:text-brand-400 text-sm">
-                                            Forgot password?
-                                        </a>
-                                    </div>
-                                    <!-- Button -->
-                                    <div>
-                                        <button type="submit"
-                                            class="bg-brand-500 shadow-theme-xs hover:bg-brand-600 flex w-full items-center justify-center rounded-lg px-4 py-3 text-sm font-medium text-white transition">
-                                            Sign In
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="mt-5">
-                                <p class="text-center text-sm font-normal text-gray-700 sm:text-start dark:text-gray-400">
-                                    Don't have an account?
-                                    <a href="/signup" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">Sign Up</a>
-                                </p>
-                            </div>
-                        </div>
                     </div>
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to Dashboard</p>
                 </div>
-            </div>
 
-            <div class="bg-brand-950 relative hidden h-full w-full items-center lg:grid lg:w-1/2 dark:bg-white/5">
-                <div class="z-1 flex items-center justify-center">
-                    <!-- ===== Common Grid Shape Start ===== -->
-                    <x-common.common-grid-shape/>
-                    <div class="flex max-w-xs flex-col items-center">
-                        <a href="/" class="mb-4 block">
-                            <img src="./images/logo/auth-logo.svg" alt="Logo" />
-                        </a>
-                        <p class="text-center text-gray-400 dark:text-white/60">
-                            Free and Open-Source Tailwind CSS Admin Dashboard Template
-                        </p>
+                {{-- Server notifications (placed above the form to avoid input-level white flash) --}}
+                @if($errors->any())
+                    <div id="serverNotification" role="alert" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; color: #ef4444; text-align: center; font-size: 14px; animation: slideIn 0.3s ease;">
+                        {{ $errors->first() }}
                     </div>
-                </div>
-            </div>
-            <!-- Toggler -->
-            <div class="fixed right-6 bottom-6 z-50">
-                <button
-                    class="bg-brand-500 hover:bg-brand-600 inline-flex size-14 items-center justify-center rounded-full text-white transition-colors"
-                    @click.prevent="$store.theme.toggle()">
-                    <svg class="hidden fill-current dark:block" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M9.99998 1.5415C10.4142 1.5415 10.75 1.87729 10.75 2.2915V3.5415C10.75 3.95572 10.4142 4.2915 9.99998 4.2915C9.58577 4.2915 9.24998 3.95572 9.24998 3.5415V2.2915C9.24998 1.87729 9.58577 1.5415 9.99998 1.5415ZM10.0009 6.79327C8.22978 6.79327 6.79402 8.22904 6.79402 10.0001C6.79402 11.7712 8.22978 13.207 10.0009 13.207C11.772 13.207 13.2078 11.7712 13.2078 10.0001C13.2078 8.22904 11.772 6.79327 10.0009 6.79327ZM5.29402 10.0001C5.29402 7.40061 7.40135 5.29327 10.0009 5.29327C12.6004 5.29327 14.7078 7.40061 14.7078 10.0001C14.7078 12.5997 12.6004 14.707 10.0009 14.707C7.40135 14.707 5.29402 12.5997 5.29402 10.0001ZM15.9813 5.08035C16.2742 4.78746 16.2742 4.31258 15.9813 4.01969C15.6884 3.7268 15.2135 3.7268 14.9207 4.01969L14.0368 4.90357C13.7439 5.19647 13.7439 5.67134 14.0368 5.96423C14.3297 6.25713 14.8045 6.25713 15.0974 5.96423L15.9813 5.08035ZM18.4577 10.0001C18.4577 10.4143 18.1219 10.7501 17.7077 10.7501H16.4577C16.0435 10.7501 15.7077 10.4143 15.7077 10.0001C15.7077 9.58592 16.0435 9.25013 16.4577 9.25013H17.7077C18.1219 9.25013 18.4577 9.58592 18.4577 10.0001ZM14.9207 15.9806C15.2135 16.2735 15.6884 16.2735 15.9813 15.9806C16.2742 15.6877 16.2742 15.2128 15.9813 14.9199L15.0974 14.036C14.8045 13.7431 14.3297 13.7431 14.0368 14.036C13.7439 14.3289 13.7439 14.8038 14.0368 15.0967L14.9207 15.9806ZM9.99998 15.7088C10.4142 15.7088 10.75 16.0445 10.75 16.4588V17.7088C10.75 18.123 10.4142 18.4588 9.99998 18.4588C9.58577 18.4588 9.24998 18.123 9.24998 17.7088V16.4588C9.24998 16.0445 9.58577 15.7088 9.99998 15.7088ZM5.96356 15.0972C6.25646 14.8043 6.25646 14.3295 5.96356 14.0366C5.67067 13.7437 5.1958 13.7437 4.9029 14.0366L4.01902 14.9204C3.72613 15.2133 3.72613 15.6882 4.01902 15.9811C4.31191 16.274 4.78679 16.274 5.07968 15.9811L5.96356 15.0972ZM4.29224 10.0001C4.29224 10.4143 3.95645 10.7501 3.54224 10.7501H2.29224C1.87802 10.7501 1.54224 10.4143 1.54224 10.0001C1.54224 9.58592 1.87802 9.25013 2.29224 9.25013H3.54224C3.95645 9.25013 4.29224 9.58592 4.29224 10.0001ZM4.9029 5.9637C5.1958 6.25659 5.67067 6.25659 5.96356 5.9637C6.25646 5.6708 6.25646 5.19593 5.96356 4.90303L5.07968 4.01915C4.78679 3.72626 4.31191 3.72626 4.01902 4.01915C3.72613 4.31204 3.72613 4.78692 4.01902 5.07981L4.9029 5.9637Z" fill="" />
-                    </svg>
-                    <svg class="fill-current dark:hidden" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.4547 11.97L18.1799 12.1611C18.265 11.8383 18.1265 11.4982 17.8401 11.3266C17.5538 11.1551 17.1885 11.1934 16.944 11.4207L17.4547 11.97ZM8.0306 2.5459L8.57989 3.05657C8.80718 2.81209 8.84554 2.44682 8.67398 2.16046C8.50243 1.8741 8.16227 1.73559 7.83948 1.82066L8.0306 2.5459ZM12.9154 13.0035C9.64678 13.0035 6.99707 10.3538 6.99707 7.08524H5.49707C5.49707 11.1823 8.81835 14.5035 12.9154 14.5035V13.0035ZM16.944 11.4207C15.8869 12.4035 14.4721 13.0035 12.9154 13.0035V14.5035C14.8657 14.5035 16.6418 13.7499 17.9654 12.5193L16.944 11.4207ZM16.7295 11.7789C15.9437 14.7607 13.2277 16.9586 10.0003 16.9586V18.4586C13.9257 18.4586 17.2249 15.7853 18.1799 12.1611L16.7295 11.7789ZM10.0003 16.9586C6.15734 16.9586 3.04199 13.8433 3.04199 10.0003H1.54199C1.54199 14.6717 5.32892 18.4586 10.0003 18.4586V16.9586ZM3.04199 10.0003C3.04199 6.77289 5.23988 4.05695 8.22173 3.27114L7.83948 1.82066C4.21532 2.77574 1.54199 6.07486 1.54199 10.0003H3.04199ZM6.99707 7.08524C6.99707 5.52854 7.5971 4.11366 8.57989 3.05657L7.48132 2.03522C6.25073 3.35885 5.49707 5.13487 5.49707 7.08524H6.99707Z" fill="" />
-                    </svg>
-                </button>
+                @endif
+                @if(session('status'))
+                    <div id="serverNotificationSuccess" role="status" style="background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.18); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; color: #059669; text-align: center; font-size: 14px; animation: slideIn 0.3s ease;">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form class="login-form" id="loginForm" novalidate action="{{ route('admin.login.post') }}" method="POST">
+                    @csrf
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+                                <svg class="eye-open" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M9 3.75C5.25 3.75 2.04 6.24 1.5 9c.54 2.76 3.75 5.25 7.5 5.25s6.96-2.49 7.5-5.25c-.54-2.76-3.75-5.25-7.5-5.25zm0 8.75a3.5 3.5 0 110-7 3.5 3.5 0 010 7zm0-5.5a2 2 0 100 4 2 2 0 000-4z" fill="currentColor"/>
+                                </svg>
+                                <svg class="eye-closed" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                    <path d="M2.25 2.25l13.5 13.5m-4.125-4.125a3 3 0 01-4.243-4.243m4.243 4.243L9 9m2.625 2.625L15 15M9 5.25c1.83 0 3.51.63 4.84 1.68M3.16 6.93A10.97 10.97 0 019 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Sign In</span>
+                        <div class="btn-loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
+
+        <!-- <script src="../../shared/js/form-utils.js"></script> -->
+        <!-- <script src="script.js"></script> -->
+
+        <!-- Shared Form Utilities -->
+        <!-- This file contains common functionality used across all login forms -->
+        <script>
+            class FormUtils {
+                static validateEmail(value) {
+                    if (!value) {
+                        return { isValid: false, message: 'Email address is required' };
+                    }
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        return { isValid: false, message: 'Please enter a valid email address' };
+                    }
+                    return { isValid: true };
+                }
+                
+                static validatePassword(value) {
+                    if (!value) {
+                        return { isValid: false, message: 'Password is required' };
+                    }
+                    // if (value.length < 8) {
+                    //     return { isValid: false, message: 'Password must be at least 8 characters long' };
+                    // }
+                    // if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+                    //     return { isValid: false, message: 'Password must contain uppercase, lowercase, and number' };
+                    // }
+                    return { isValid: true };
+                }
+                
+                static showError(fieldName, message) {
+                    const formGroup = document.getElementById(fieldName).closest('.form-group');
+                    const errorElement = document.getElementById(fieldName + 'Error');
+                    
+                    if (formGroup && errorElement) {
+                        formGroup.classList.add('error');
+                        errorElement.textContent = message;
+                        errorElement.classList.add('show');
+                        
+                        // Add shake animation to the field
+                        const field = document.getElementById(fieldName);
+                        if (field) {
+                            field.style.animation = 'shake 0.5s ease-in-out';
+                            setTimeout(() => {
+                                field.style.animation = '';
+                            }, 500);
+                        }
+                    }
+                }
+                
+                static clearError(fieldName) {
+                    const formGroup = document.getElementById(fieldName).closest('.form-group');
+                    const errorElement = document.getElementById(fieldName + 'Error');
+                    
+                    if (formGroup && errorElement) {
+                        formGroup.classList.remove('error');
+                        errorElement.classList.remove('show');
+                        setTimeout(() => {
+                            errorElement.textContent = '';
+                        }, 300);
+                    }
+                }
+                
+                static showSuccess(fieldName) {
+                    const field = document.getElementById(fieldName);
+                    const wrapper = field?.closest('.input-wrapper');
+                    
+                    if (wrapper) {
+                        // Add subtle success indication
+                        wrapper.style.borderColor = '#22c55e';
+                        setTimeout(() => {
+                            wrapper.style.borderColor = '';
+                        }, 2000);
+                    }
+                }
+                
+                static simulateLogin(email, password) {
+                    return new Promise((resolve, reject) => {
+                        // Simulate network delay
+                        setTimeout(() => {
+                            // Demo: reject if email is 'admin@demo.com' and password is 'wrongpassword'
+                            if (email === 'admin@demo.com' && password === 'wrongpassword') {
+                                reject(new Error('Invalid email or password'));
+                            } else {
+                                resolve({ success: true, user: { email } });
+                            }
+                        }, 2000);
+                    });
+                }
+                
+                static showNotification(message, type = 'info', container = null) {
+                    // Prefer passed container, else place into serverNotification area above form if present,
+                    // otherwise fallback to form element (will append at end).
+                    const serverArea = document.getElementById('serverNotification') || document.getElementById('serverNotificationSuccess');
+                    const targetContainer = container || serverArea || document.querySelector('form');
+                    if (!targetContainer) return;
+
+                    // Remove any existing notification inside the target so message appears in the header area
+                    const existing = targetContainer.querySelector && targetContainer.querySelector('.notification');
+                    if (existing) existing.remove();
+
+                    // Create notification element
+                    const notification = document.createElement('div');
+                    notification.className = `notification ${type}`;
+
+                    let backgroundColor, borderColor, textColor;
+                    switch (type) {
+                        case 'error':
+                            backgroundColor = 'rgba(239, 68, 68, 0.06)';
+                            borderColor = 'rgba(239, 68, 68, 0.18)';
+                            textColor = '#ef4444';
+                            break;
+                        case 'success':
+                            backgroundColor = 'rgba(34, 197, 94, 0.06)';
+                            borderColor = 'rgba(34, 197, 94, 0.18)';
+                            textColor = '#059669';
+                            break;
+                        default:
+                            backgroundColor = 'rgba(6, 182, 212, 0.06)';
+                            borderColor = 'rgba(6, 182, 212, 0.18)';
+                            textColor = '#06b6d4';
+                    }
+
+                    notification.innerHTML = `
+                        <div style="
+                            background: ${backgroundColor}; 
+                            backdrop-filter: blur(6px); 
+                            border: 1px solid ${borderColor}; 
+                            border-radius: 12px; 
+                            padding: 12px 16px; 
+                            margin-bottom: 16px; 
+                            color: ${textColor}; 
+                            text-align: center;
+                            font-size: 14px;
+                            animation: slideIn 0.2s ease;
+                        ">
+                            ${message}
+                        </div>
+                    `;
+
+                    // If target is a form, insert before the form so it appears above the inputs
+                    if (targetContainer.tagName && targetContainer.tagName.toLowerCase() === 'form') {
+                        targetContainer.parentNode.insertBefore(notification, targetContainer);
+                    } else {
+                        targetContainer.appendChild(notification);
+                    }
+
+                    // Auto-remove after 5s
+                    setTimeout(() => {
+                        notification.style.animation = 'slideOut 0.2s ease';
+                        setTimeout(() => notification.remove(), 200);
+                    }, 5000);
+                }
+                
+                static setupFloatingLabels(form) {
+                    const inputs = form.querySelectorAll('input');
+                    inputs.forEach(input => {
+                        // Check if field has value on page load
+                        if (input.value.trim() !== '') {
+                            input.classList.add('has-value');
+                        }
+                        
+                        input.addEventListener('input', () => {
+                            if (input.value.trim() !== '') {
+                                input.classList.add('has-value');
+                            } else {
+                                input.classList.remove('has-value');
+                            }
+                        });
+                    });
+                }
+                
+                static setupPasswordToggle(passwordInput, toggleButton) {
+                    if (toggleButton && passwordInput) {
+                        toggleButton.addEventListener('click', () => {
+                            const isPassword = passwordInput.type === 'password';
+                            const eyeIcon = toggleButton.querySelector('.eye-icon');
+                            
+                            passwordInput.type = isPassword ? 'text' : 'password';
+                            if (eyeIcon) {
+                                eyeIcon.classList.toggle('show-password', isPassword);
+                            }
+                            
+                            // Add smooth transition effect
+                            toggleButton.style.transform = 'scale(0.9)';
+                            setTimeout(() => {
+                                toggleButton.style.transform = 'scale(1)';
+                            }, 150);
+                            
+                            // Keep focus on password input
+                            passwordInput.focus();
+                        });
+                    }
+                }
+                
+                static addEntranceAnimation(element, delay = 100) {
+                    if (element) {
+                        element.style.opacity = '0';
+                        element.style.transform = 'translateY(30px)';
+                        
+                        setTimeout(() => {
+                            element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                            element.style.opacity = '1';
+                            element.style.transform = 'translateY(0)';
+                        }, delay);
+                    }
+                }
+                
+                static addSharedAnimations() {
+                    // Add CSS animations to document head if not already present
+                    if (!document.getElementById('shared-animations')) {
+                        const style = document.createElement('style');
+                        style.id = 'shared-animations';
+                        style.textContent = `
+                            @keyframes slideIn {
+                                from { opacity: 0; transform: translateY(-10px); }
+                                to { opacity: 1; transform: translateY(0); }
+                            }
+                            
+                            @keyframes slideOut {
+                                from { opacity: 1; transform: translateY(0); }
+                                to { opacity: 0; transform: translateY(-10px); }
+                            }
+                            
+                            @keyframes shake {
+                                0%, 100% { transform: translateX(0); }
+                                25% { transform: translateX(-5px); }
+                                75% { transform: translateX(5px); }
+                            }
+                            
+                            @keyframes checkmarkPop {
+                                0% { transform: scale(0); }
+                                50% { transform: scale(1.3); }
+                                100% { transform: scale(1); }
+                            }
+                            
+                            @keyframes successPulse {
+                                0% { transform: scale(0); }
+                                50% { transform: scale(1.1); }
+                                100% { transform: scale(1); }
+                            }
+                            
+                            @keyframes spin {
+                                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                                100% { transform: translate(-50%, -50%) rotate(360deg); }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                }
+            }
+        </script>
+
+        <!-- Clean Banking Login Form JavaScript -->
+        <script>
+            class CleanBankingLoginForm {
+                constructor() {
+                    this.form = document.getElementById('loginForm');
+                    this.emailInput = document.getElementById('email');
+                    this.passwordInput = document.getElementById('password');
+                    this.passwordToggle = document.getElementById('passwordToggle');
+                    this.submitButton = this.form.querySelector('.login-btn');
+                    this.successMessage = document.getElementById('successMessage');
+                    
+                    this.init();
+                }
+                
+                init() {
+                    this.bindEvents();
+                    this.setupPasswordToggle();
+                }
+                
+                bindEvents() {
+                    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                    this.emailInput.addEventListener('blur', () => this.validateEmail());
+                    this.passwordInput.addEventListener('blur', () => this.validatePassword());
+                    this.emailInput.addEventListener('input', () => this.clearError('email'));
+                    this.passwordInput.addEventListener('input', () => this.clearError('password'));
+                }
+                
+                setupPasswordToggle() {
+                    this.passwordToggle.addEventListener('click', () => {
+                        const type = this.passwordInput.type === 'password' ? 'text' : 'password';
+                        this.passwordInput.type = type;
+                        
+                        this.passwordToggle.classList.toggle('show-password', type === 'text');
+                    });
+                }
+                
+                validateEmail() {
+                    const email = this.emailInput.value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+                    if (!email) {
+                        this.showError('email', 'Email address is required');
+                        return false;
+                    }
+                    
+                    if (!emailRegex.test(email)) {
+                        this.showError('email', 'Please enter a valid email address');
+                        return false;
+                    }
+                    
+                    this.clearError('email');
+                    return true;
+                }
+                
+                validatePassword() {
+                    const password = this.passwordInput.value;
+                    
+                    if (!password) {
+                        this.showError('password', 'Password is required');
+                        return false;
+                    }
+                    
+                    // if (password.length < 8) {
+                    //     this.showError('password', 'Password must be at least 8 characters long');
+                    //     return false;
+                    // }
+                    
+                    this.clearError('password');
+                    return true;
+                }
+                
+                showError(field, message) {
+                    const formGroup = document.getElementById(field).closest('.form-group');
+                    const errorElement = document.getElementById(`${field}Error`);
+                    
+                    formGroup.classList.add('error');
+                    errorElement.textContent = message;
+                    errorElement.classList.add('show');
+                }
+                
+                clearError(field) {
+                    const formGroup = document.getElementById(field).closest('.form-group');
+                    const errorElement = document.getElementById(`${field}Error`);
+                    
+                    formGroup.classList.remove('error');
+                    errorElement.classList.remove('show');
+                    setTimeout(() => {
+                        errorElement.textContent = '';
+                    }, 200);
+                }
+                
+                async handleSubmit(e) {
+                    e.preventDefault();
+
+                    const isEmailValid = this.validateEmail();
+                    const isPasswordValid = this.validatePassword();
+
+                    if (!isEmailValid || !isPasswordValid) {
+                        return;
+                    }
+
+                    const url = this.form.action;
+                    const formData = new FormData(this.form);
+
+                    try {
+                        const resp = await fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            credentials: 'same-origin'
+                        });
+
+                        if (resp.status === 422) {
+                            const json = await resp.json().catch(() => ({}));
+                            const errors = json.errors || {};
+                            // Show first server error as notification
+                            const first = errors.email || errors.password || Object.values(errors)[0] || 'Terjadi kesalahan pada input.';
+                            FormUtils.showNotification(first, 'error', this.form);
+                            // For the generic credential error we prefer the top notification
+                            if (errors.email && errors.email !== 'Email atau password salah') this.showError('email', errors.email);
+                            if (errors.password) this.showError('password', errors.password);
+                            return;
+                        }
+
+                        if (!resp.ok) {
+                            FormUtils.showNotification('Terjadi kesalahan server. Silakan coba lagi.', 'error', this.form);
+                            return;
+                        }
+
+                        const json = await resp.json().catch(() => null);
+                        if (json && json.redirect) {
+                            // Redirect immediately to avoid showing an intermediate empty login state
+                            window.location.href = json.redirect;
+                        } else {
+                            // fallback: reload to follow any non-AJAX redirect
+                            window.location.reload();
+                        }
+
+                    } catch (err) {
+                        FormUtils.showNotification('Gagal menghubungi server. Periksa koneksi Anda.', 'error', this.form);
+                    }
+                }
+                
+                // loading visuals and intermediate success UI removed to allow immediate redirect
+            }
+
+            // Initialize the form when DOM is loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                new CleanBankingLoginForm();
+            });
+        </script>
 @endsection

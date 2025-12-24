@@ -26,7 +26,14 @@ class AuthController extends Controller
         if ($user && Hash::check($data['password'], $user->password)) {
             Auth::login($user);
             $request->session()->regenerate();
+            if ($request->expectsJson()) {
+                return response()->json(['success' => true, 'redirect' => route('dashboard')]);
+            }
             return redirect()->intended(route('dashboard'));
+        }
+
+        if ($request->expectsJson()) {
+            return response()->json(['errors' => ['email' => 'Email atau password salah']], 422);
         }
 
         return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
