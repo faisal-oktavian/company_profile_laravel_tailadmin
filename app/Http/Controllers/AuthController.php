@@ -16,27 +16,37 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        try {
+            $data = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
 
-        $user = User::where('email', $data['email'])->first();
+            $user = User::where('email', $data['email'])->first();
 
-        if ($user && Hash::check($data['password'], $user->password)) {
-            Auth::login($user);
-            $request->session()->regenerate();
-            if ($request->expectsJson()) {
-                return response()->json(['success' => true, 'redirect' => route('dashboard')]);
+            if ($user && Hash::check($data['password'], $user->password)) {
+                Auth::login($user);
+                $request->session()->regenerate();
+                if ($request->expectsJson()) {
+                    return response()->json(['success' => true, 'redirect' => route('dashboard')]);
+                }
+                return redirect()->intended(route('dashboard'));
             }
-            return redirect()->intended(route('dashboard'));
-        }
 
-        if ($request->expectsJson()) {
-            return response()->json(['errors' => ['email' => 'Email atau password salah']], 422);
-        }
+            if ($request->expectsJson()) {
+                return response()->json(['errors' => ['email' => 'Email atau password salah']], 422);
+            }
 
-        return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
+            return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
+        } catch (\Exception $e) {
+            \Log::error('Login error: ' . $e->getMessage());
+            
+            if ($request->expectsJson()) {
+                return response()->json(['errors' => ['email' => 'Terjadi kesalahan server. Silakan coba lagi.']], 500);
+            }
+
+            return back()->withErrors(['email' => 'Terjadi kesalahan server. Silakan coba lagi.'])->withInput();
+        }
     }
 
     public function logout(Request $request)
